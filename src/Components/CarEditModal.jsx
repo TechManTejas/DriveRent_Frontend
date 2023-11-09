@@ -3,51 +3,51 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 
-export default function CouponEditModal({ hideModal, couponId }) {
+export default function CarEditModal({ hideModal, carId }) {
 
     const [form] = Form.useForm();
-    const [couponData, setCouponData] = useState({});
+    const [carData, setcarData] = useState({});
 
     useEffect(() => {
-        // Fetch coupon details based on couponId using Axios
-        axios.get(`/my-coupons/${couponId}/`, {
+        // Fetch car details based on carId using Axios
+        axios.get(`/my-cars/${carId}/`, {
             headers: {
-                Authorization: `Token ${localStorage.getItem("share-coupon-access-token")}`,
+                Authorization: `Token ${localStorage.getItem("drive-rent-access-token")}`,
             },
         })
             .then((response) => {
-                setCouponData(response.data);
+                setcarData(response.data);
                 form.setFieldsValue(response.data);
-                console.log(couponData)
+                console.log(carData)
             })
             .catch((error) => {
-                console.error('Error fetching coupon details:', error);
+                console.error('Error fetching car details:', error);
             });
-    }, [couponId, form]);
+    }, [carId, form]);
 
     const onFinish = (values) => {
         values.status = values.status === false ? "Closed" : "Active"
 
         console.log('Updated values:', values);
 
-        axios.patch(`/my-coupons/${couponId}/`, values, {
+        axios.patch(`/my-cars/${carId}/`, values, {
             headers: {
-                Authorization: `Token ${localStorage.getItem("share-coupon-access-token")}`,
+                Authorization: `Token ${localStorage.getItem("drive-rent-access-token")}`,
             },
         })
             .then((response) => {
-                console.log('Coupon updated:', response.data);
+                console.log('car updated:', response.data);
                 hideModal();
             })
             .catch((error) => {
-                console.error('Error updating coupon:', error);
+                console.error('Error updating car:', error);
             });
     };
 
     return (
         <Form
           form={form}
-          name="couponForm"
+          name="carForm"
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 16 }}
           onFinish={onFinish}

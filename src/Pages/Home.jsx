@@ -2,15 +2,15 @@ import { useEffect, useState } from 'react';
 import { Modal } from 'antd';
 import axios from 'axios';
 import ButtonWavey from "../Components/ButtonWavey";
-import CouponCard from "../Components/CouponCard";
+import CarCard from "../Components/CarCard";
 import Navbar from "../Components/Navbar";
-import CouponCreateModal from '../Components/CouponCreateModal';
+import CarCreateModal from '../Components/CarCreateModal';
 
 export default function Home() {
 
     const [visible, setVisible] = useState(false);
-    const [selectedBucket, setSelectedBucket] = useState("all-coupons")
-    const [coupons, setCoupons] = useState([])
+    const [selectedBucket, setSelectedBucket] = useState("all-cars")
+    const [cars, setcars] = useState([])
     const [updater, setUpdater] = useState(0)
 
     const showModal = () => {
@@ -22,16 +22,16 @@ export default function Home() {
         setVisible(false);
     };
 
-    function getCoupons() {
+    function getcars() {
         axios.get(`/${selectedBucket}/`, {
             headers: {
-                Authorization: `Token ${localStorage.getItem("share-coupon-access-token")}`
+                Authorization: `Token ${localStorage.getItem("drive-rent-access-token")}`
             }
         }).then(function (response) {
             // Handle the successful response here
             console.log('Response data:', response.data);
 
-            setCoupons(response.data)
+            setcars(response.data)
 
         }).catch(function (error) {
             // Handle any errors that occurred during the request
@@ -40,26 +40,26 @@ export default function Home() {
     }
 
     useEffect(() => {
-        getCoupons()
+        getcars()
     }, [selectedBucket, updater])
 
 
     return (
         <>
             <Modal
-                title="Create Coupon"
+                title="Create car"
                 open={visible}
                 onCancel={hideModal}
                 footer={null}
             >
-                <CouponCreateModal hideModal={hideModal} />
+                <CarCreateModal hideModal={hideModal} />
             </Modal>
             <Navbar />
             <div>
                 <div className="flex justify-between items-center border p-4">
                     <div className="flex gap-x-4">
-                        <ButtonWavey text={"All Coupons"} onClick={() => { setSelectedBucket("all-coupons") }} color="blue" />
-                        <ButtonWavey text={"My Coupons"} onClick={() => { setSelectedBucket("my-coupons") }} color="blue" />
+                        <ButtonWavey text={"All Cars"} onClick={() => { setSelectedBucket("all-cars") }} color="blue" />
+                        <ButtonWavey text={"My Cars"} onClick={() => { setSelectedBucket("my-cars") }} color="blue" />
                     </div>
                     <div>
                         <div onClick={showModal} className="bg-blue-500 hover:bg-blue-600 text-white text-4xl w-16 h-16 rounded-full flex justify-center items-center shadow-black shadow-md">
@@ -70,9 +70,9 @@ export default function Home() {
             </div>
             <div>
                 <div className="grid grid-cols-4">
-                    {coupons.map((coupon, id) => {
+                    {cars.map((car, id) => {
                         return (
-                            <CouponCard key={id} id={coupon.id} title={coupon.title} status={coupon.status} likes={coupon.likes} bucket={selectedBucket}/>
+                            <CarCard key={id} id={car.id} model={car.model} company={car.company} number={car.number} bucket={selectedBucket} image={car.image}/>
                         )
                     })}
                 </div>

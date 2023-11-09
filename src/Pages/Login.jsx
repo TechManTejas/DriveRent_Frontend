@@ -1,4 +1,4 @@
-import ShareCouponLogo from "../Images/ShareCouponLogo.png"
+import DriveRentLogo from "../Images/DriveRentLogo.png"
 import axios from "axios";
 import { useState } from "react";
 
@@ -8,7 +8,7 @@ export default function Login() {
     const [password, setPassword] = useState("")
 
     const sectionStyle = {
-        backgroundImage: `url('https://cdn.pixabay.com/photo/2017/11/24/10/43/ticket-2974645_1280.jpg')`
+        backgroundImage: `url('https://cdn.pixabay.com/photo/2016/12/03/18/57/car-1880381_1280.jpg')`
     };
 
     function login() {
@@ -21,8 +21,8 @@ export default function Login() {
                 // Handle the successful response here
                 console.log('Response data:', response.data);
 
-                localStorage.setItem('share-coupon-access-token', response.data.token)
-                localStorage.setItem('share-coupon-user', response.data.user)
+                localStorage.setItem('drive-rent-access-token', response.data.token)
+                localStorage.setItem('drive-rent-user', response.data.user)
                 window.location.href = "/"
             })
             .catch(function (error) {
@@ -41,10 +41,10 @@ export default function Login() {
                     >
                         <img
                             className="w-8 h-8 mr-2"
-                            src={ShareCouponLogo}
+                            src={DriveRentLogo}
                             alt="logo"
                         />
-                        ShareCoupon
+                        DriveRent
                     </a>
                     <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">

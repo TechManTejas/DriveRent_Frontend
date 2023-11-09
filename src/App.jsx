@@ -4,7 +4,7 @@ import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
-import Chat from "./Pages/Chat";
+import Details from "./Pages/Details";
 
 const unauthenticatedRoutes = () => {
   return (
@@ -19,7 +19,7 @@ const authenticatedRoutes = () => {
   return (
     <Routes>
         <Route exact path="/" element={<Home/>}/>
-        <Route exact path="/chat" element={<Chat/>}/>
+        <Route exact path="/details" element={<Details/>}/>
     </Routes>
   )
 }
@@ -27,10 +27,10 @@ const authenticatedRoutes = () => {
 function App() {
 
   const [routes, setRoutes] = useState(unauthenticatedRoutes)
-  const [accessToken] = useState(localStorage.getItem("share-coupon-access-token"))
+  const [accessToken] = useState(localStorage.getItem("drive-rent-access-token"))
 
   useEffect(() => {
-    if (localStorage.getItem("share-coupon-access-token"))
+    if (localStorage.getItem("drive-rent-access-token"))
       setRoutes(() => authenticatedRoutes)
     else
       setRoutes(() => unauthenticatedRoutes)
